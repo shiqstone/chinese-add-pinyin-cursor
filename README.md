@@ -35,6 +35,7 @@ VITE_OPENAI_API_KEY=your_openai_api_key
 4. 启动开发环境
 ```bash
 pnpm run dev
+```
 
 5. 构建生产版本
 ```bash
