@@ -3,6 +3,7 @@ dist
 dist-ssr
 *.local
 .env
+.env.development
 .DS_Store
 
 # Log files

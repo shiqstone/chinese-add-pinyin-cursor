@@ -105,11 +105,16 @@ const aiConvertToPinyin = async () => {
     try {
       isLoading.value = true
       
+      const apiKey = import.meta.env.VITE_OPENAI_API_KEY
+      if (!apiKey) {
+        throw new Error('API key not found')
+      }
+      
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`
+          'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
@@ -244,6 +249,7 @@ onUnmounted(() => {
   gap: 30px;
   overflow-y: auto; /* 允许内容区域滚动 */
   -webkit-overflow-scrolling: touch; /* 在 iOS 上提供更流畅的滚动 */
+  width: 100%; /* 确保内容宽度填满容器 */
 }
 
 h1 {
@@ -258,6 +264,7 @@ h1 {
   flex-direction: column;
   gap: 20px;
   flex-shrink: 0; /* 防止输入区域被压缩 */
+  width: 100%; /* 确保输入区域宽度填满容器 */
 }
 
 textarea {
@@ -271,6 +278,7 @@ textarea {
   resize: none;
   background-color: var(--theme-color-light);
   transition: border-color 0.3s ease;
+  box-sizing: border-box; /* 确保padding不会导致宽度溢出 */
 }
 
 .convert-btn {
@@ -359,6 +367,7 @@ textarea {
 @media (max-width: 768px) {
   .container {
     padding: var(--container-padding-mobile);
+    box-sizing: border-box; /* 确保padding不会导致宽度溢出 */
   }
 
   .content-wrapper {
@@ -376,7 +385,7 @@ textarea {
 
   textarea {
     min-height: 120px;
-    max-height: 200px; /* 移动端减小最大高度 */
+    max-height: 200px;
     padding: 12px;
     font-size: 16px;
   }
